@@ -17,6 +17,7 @@ services:
       - "8554:8554" # RTSP feeds
     networks:
       - cctv-vlan
+      - proxy-vlan
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}
@@ -24,4 +25,6 @@ services:
 
 networks:
   cctv-vlan:
+    external: true
+  proxy-vlan:
     external: true

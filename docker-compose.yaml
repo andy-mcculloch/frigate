@@ -15,3 +15,16 @@ services:
     ports:
       - "8971:8971"
       - "8554:8554" # RTSP feeds
+    networks:
+      - cctv
+      - macvlan-system
+    dns:
+      - ${DNS_IP1}
+      - ${DNS_IP2}
+    dns_search: ${DOMAIN}
+
+networks:
+  cctv:
+    external: true
+  macvlan-system:
+    external: true

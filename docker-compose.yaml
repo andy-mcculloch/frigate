@@ -18,11 +18,9 @@ services:
       - "8554:8554" # RTSP feeds
     networks:
       cctv-vlan:
-        aliases:
-          - frigate
+        ipv4_address: ${CCTV_VLAN_IP}
       proxy-vlan:
-        aliases:
-          - frigate
+        ipv4_address: ${PROXY_VLAN_IP}
     dns:
       - ${DNS_IP1}
       - ${DNS_IP2}

@@ -18,10 +18,10 @@ services:
       - "8554:8554" # RTSP feeds
     networks:
       cctv-vlan:
-        aliaes:
+        aliases:
           - frigate
       proxy-vlan:
-        aliaes:
+        aliases:
           - frigate
     dns:
       - ${DNS_IP1}

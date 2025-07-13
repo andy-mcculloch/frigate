@@ -1,22 +1,24 @@
+# yaml-language-server: $schema=http://frigate_host:5000/api/config/schema.json
+
 mqtt:
   enabled: False
 
 go2rtc:
   streams:
-    cat_cam_1:
-      - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}#video=copy#audio=copy#audio=opus"
-    cat_cam_1_sub:
-      - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}"
+    cat_cam_1: rtsp://{FRIGATE_CAT_CAM_USER}:{FRIGATE_CAT_CAM_PASSWORD}@{FRIGATE_CAT_CAM_1_IP}:554/h264Preview_01_sub
+    # cat_cam_1:
+    #   - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}#video=copy#audio=copy#audio=opus"
+    # cat_cam_1_sub:
+    #   - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}"
 
 cameras:
   cat_cam_1:
     ffmpeg:
       inputs:
+      inputs:
         - path: rtsp://127.0.0.1:8554/cat_cam_1
-          input_args: preset-rtsp-restream
-          roles:
-            - record
-        - path: rtsp://127.0.0.1:8554/cat_cam_1_sub
-          input_args: preset-rtsp-restream
           roles:
             - detect
+            - record
+      output_args:
+        record: preset-record-generic-audio-aac

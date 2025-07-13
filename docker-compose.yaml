@@ -14,7 +14,7 @@ services:
       FRIGATE_CAT_CAM_PASSWORD: ${FRIGATE_CAT_CAM_PASSWORD}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
+      - ./config/config.yml:/config/config.yml
       - /u/frigate:/media/frigate
       - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
         target: /tmp/cache
@@ -23,6 +23,7 @@ services:
     ports:
       - "8971:8971"
       - "8554:8554" # RTSP feeds
+      - "5000:5000" # unauthenticated API
     networks:
       cctv-vlan:
         ipv4_address: ${CCTV_VLAN_IP}

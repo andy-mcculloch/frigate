@@ -1,0 +1,19 @@
+go2rtc:
+  streams:
+    cat_cam_1:
+      - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}#video=copy#audio=copy#audio=opus"
+    cat_cam_1_sub:
+      - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}"
+
+cameras:
+  cat_cam_1:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/cat_cam_1
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/cat_cam_1_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect

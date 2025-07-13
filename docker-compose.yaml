@@ -14,7 +14,7 @@ services:
       FRIGATE_CAT_CAM_PASSWORD: ${FRIGATE_CAT_CAM_PASSWORD}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./config/config.yml:/config/config.yml
+      - config:/config
       - /u/frigate:/media/frigate
       - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
         target: /tmp/cache
@@ -34,6 +34,9 @@ services:
       - ${DNS_IP2}
     dns_search: ${DOMAIN}
 
+volumes:
+  config:
+  
 networks:
   cctv-vlan:
     external: true

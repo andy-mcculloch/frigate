@@ -7,7 +7,13 @@ services:
     stop_grace_period: 30s
     image: ghcr.io/blakeblackshear/frigate:stable
     shm_size: 512mb
+    environment:
+      FRIGATE_RTSP_PASSWORD: ${FRIGATE_RTSP_PASSWORD}
+      FRIGATE_CAT_CAM_1_IP: ${FRIGATE_CAT_CAM_1_IP}
+      FRIGATE_CAT_CAM_USER: ${FRIGATE_CAT_CAM_USER}
+      FRIGATE_CAT_CAM_PASSWORD: ${FRIGATE_CAT_CAM_PASSWORD}
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./config:/config
       - /u/frigate:/media/frigate
       - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear

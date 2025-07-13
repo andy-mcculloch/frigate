@@ -1,3 +1,6 @@
+mqtt:
+  enabled: False
+
 go2rtc:
   streams:
     cat_cam_1:

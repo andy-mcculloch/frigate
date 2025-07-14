@@ -1,32 +1,169 @@
-# yaml-language-server: $schema=http://frigate_host:5000/api/config/schema.json
-
 mqtt:
-  enabled: False
+  enabled: false
 
-# birdseye:
-#   enabled: true
-#   mode: continuous
+logger:
+  # Optional: default log level (default: shown below)
+  default: warning
+
+ffmpeg:
+  hwaccel_args: preset-vaapi
 
 # detectors:
-#   ov_0:
+#   ov:
 #     type: openvino
-#     device: CPU
+#     device: AUTO
+
+record:
+  enabled: false
+  retain:
+    days: 7
+    mode: motion
+  alerts:
+    retain:
+      days: 30
+  detections:
+    retain:
+      days: 30
+
+snapshots:
+  enabled: false
+  retain:
+    default: 30
 
 go2rtc:
   streams:
-    cat_cam_1: rtsp://{FRIGATE_CAT_CAM_USER}:{FRIGATE_CAT_CAM_PASSWORD}@{FRIGATE_CAT_CAM_1_IP}:554/h264Preview_01_sub
-    # cat_cam_1:
-    #   - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}#video=copy#audio=copy#audio=opus"
-    # cat_cam_1_sub:
-    #   - "ffmpeg:http://{FRIGATE_CAT_CAM_1_IP}/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_CAT_CAM_USER}&password={FRIGATE_CAT_CAM_PASSWORD}"
+    cat_cam_1:
+      - rtsp://admin:D3pl0ym3nt!@192.168.2.24:554/h264
+    cat_cam_1_sub:
+      - rtsp://admin:D3pl0ym3nt!@192.168.2.24:554/h264Preview_01_sub
+    cat_cam_2:
+      - rtsp://admin:D3pl0ym3nt!@192.168.2.25:554/h264
+    cat_cam_2_sub:
+      - rtsp://admin:D3pl0ym3nt!@192.168.2.25:554/h264Preview_01_sub
+    cat_cam_3_1:
+      - rtsp://admin:L264957A@192.168.2.26/cam/realmonitor?channel=1&subtype=0
+    cat_cam_3_1_sub:
+      - rtsp://admin:L264957A@192.168.2.26/cam/realmonitor?channel=1&subtype=1
+    cat_cam_3_2:
+      - rtsp://admin:L264957A@192.168.2.26/cam/realmonitor?channel=2&subtype=0
+    cat_cam_3_2_sub:
+      - rtsp://admin:L264957A@192.168.2.26/cam/realmonitor?channel=2&subtype=1
+    # doorbell:
+    #   - "ffmpeg:http://192.168.2.23/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=D3pl0ym3nt!#video=copy#audio=copy#audio=opus"
+    #   # - rtsp://admin:D3pl0ym3nt!@192.168.2.23/h264
+    # doorbell_sub:
+    #   - "ffmpeg:http://192.168.2.23/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=admin&password=D3pl0ym3nt!"
+    #   # - rtsp://admin:D3pl0ym3nt!@192.168.2.23/h264Preview_01_sub
+    # dining_room:
+    #   - "ffmpeg:http://192.168.2.21/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=D3pl0ym3nt!#video=copy#audio=copy#audio=opus"
+    # dining_room_sub:
+    #   - "ffmpeg:http://192.168.2.21/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=admin&password=D3pl0ym3nt!"
+    # back_garden_01:
+    #   # - "ffmpeg:http://192.168.2.22/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=D3pl0ym3nt!#video=copy#audio=copy#audio=opus"
+    #   - rtsp://admin:D3pl0ym3nt!@192.168.2.22:554/Preview_01_main
+    # back_garden_01_sub:
+    #   # - "ffmpeg:http://192.168.2.22/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=admin&password=D3pl0ym3nt!"
+    #   - rtsp://admin:D3pl0ym3nt!@192.168.2.22:554/Preview_01_sub
+    # # back_garden_02:
+    # #   # - "ffmpeg:http://192.168.2.22/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=D3pl0ym3nt!#video=copy#audio=copy#audio=opus"
+    # #   - rtsp://admin:D3pl0ym3nt!@192.168.2.22:554/Preview_02_main
+    # # back_garden_02_sub:
+    # #   # - "ffmpeg:http://192.168.2.22/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user=admin&password=D3pl0ym3nt!"
+    # #   - rtsp://admin:D3pl0ym3nt!@192.168.2.22:554/Preview_02_sub
+    # driveway_01:
+    #   # - "ffmpeg:http://192.168.2.27/flv?port=1935&app=bcs&stream=channel02_main.bcs&user=admin&password=D3pl0ym3nt!#video=copy#audio=copy#audio=opus"
+    #   - rtsp://admin:D3pl0ym3nt!@192.168.2.27:554/Preview_01_main
+    # driveway_01_sub:
+    #   # - "ffmpeg:http://192.168.2.27/flv?port=1935&app=bcs&stream=channel02_ext.bcs&user=admin&password=D3pl0ym3nt!"
+    #   - rtsp://admin:D3pl0ym3nt!@192.168.2.27:554/Preview_01_sub
+    # # driveway_02:
+    # #   # - "ffmpeg:http://192.168.2.27/flv?port=1935&app=bcs&stream=channel02_main.bcs&user=admin&password=D3pl0ym3nt!#video=copy#audio=copy#audio=opus"
+    # #   - rtsp://admin:D3pl0ym3nt!@192.168.2.27:554/Preview_02_main
+    # # driveway_02_sub:
+    # #   # - "ffmpeg:http://192.168.2.27/flv?port=1935&app=bcs&stream=channel02_ext.bcs&user=admin&password=D3pl0ym3nt!"
+    # #   - rtsp://admin:D3pl0ym3nt!@192.168.2.27:554/Preview_02_sub
+
+
 
 cameras:
   cat_cam_1:
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/cat_cam_1
+        - path: rtsp://localhost:8554/cat_cam_1
           roles:
-            - detect
             - record
       output_args:
         record: preset-record-generic-audio-aac
+  cat_cam_2:
+    ffmpeg:
+      inputs:
+        - path: rtsp://localhost:8554/cat_cam_2
+          roles:
+            - record
+      output_args:
+        record: preset-record-generic-audio-aac
+  cat_cam_3_1:
+    ffmpeg:
+      inputs:
+        - path: rtsp://localhost:8554/cat_cam_3_1
+          roles:
+            - record
+      output_args:
+        record: preset-record-generic-audio-aac
+  cat_cam_3_2:
+    ffmpeg:
+      inputs:
+        - path: rtsp://localhost:8554/cat_cam_3_2
+          roles:
+            - record
+      output_args:
+        record: preset-record-generic-audio-aac
+  # doorbell:
+  #   ffmpeg:
+  #     inputs:
+  #       - path: rtsp://localhost:8554/doorbell
+  #         roles:
+  #           - record
+  #     output_args:
+  #       record: preset-record-generic-audio-aac
+  # dining_room:
+  #   ffmpeg:
+  #     inputs:
+  #       - path: rtsp://localhost:8554/dining_room
+  #         roles:
+  #           - record
+  #     output_args:
+  #       record: preset-record-generic-audio-aac
+  # back_garden_01:
+  #   ffmpeg:
+  #     inputs:
+  #       - path: rtsp://localhost:8554/back_garden_01
+  #         roles:
+  #           - record
+  #     output_args:
+  #       record: preset-record-generic-audio-aac
+  # # back_garden_02:
+  # #   ffmpeg:
+  # #     inputs:
+  # #       - path: rtsp://localhost:8554/back_garden_02
+  # #         roles:
+  # #           - record
+  # #     output_args:
+  # #       record: preset-record-generic-audio-aac
+  # driveway_01:
+  #   ffmpeg:
+  #     inputs:
+  #       - path: rtsp://localhost:8554/driveway_01
+  #         roles:
+  #           - record
+  #     output_args:
+  #       record: preset-record-generic-audio-aac
+  # # driveway_02:
+  # #   ffmpeg:
+  # #     inputs:
+  # #       - path: rtsp://localhost:8554/driveway_02
+  # #         roles:
+  # #           - record
+  # #     output_args:
+  # #       record: preset-record-generic-audio-aac
+version: 0.15-1

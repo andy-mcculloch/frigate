@@ -8,6 +8,7 @@ services:
     image: ghcr.io/blakeblackshear/frigate:stable
     shm_size: 512mb
     environment:
+      LIBVA_DRIVER_NAME: i965
       FRIGATE_RTSP_PASSWORD: ${FRIGATE_RTSP_PASSWORD}
       FRIGATE_CAT_CAM_1_IP: ${FRIGATE_CAT_CAM_1_IP}
       FRIGATE_CAT_CAM_USER: ${FRIGATE_CAT_CAM_USER}

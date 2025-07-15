@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     stop_grace_period: 30s
     image: ghcr.io/blakeblackshear/frigate:stable
-    shm_size: 512mb
+    shm_size: 1536mb
     devices:
       - /dev/dri/card1:/dev/dri/renderD128 # For Intel QuickSync
     environment:
